@@ -78,50 +78,50 @@ const createWindow = async () => {
     icon: path.join(__dirname, 'icon.png'),
   });
 
-  const url = 'https://t3.chat/chat';
+  const url = 'https://t3.chat';
+
+    // Fetch and process main page only
+    const response = await fetch(url);
+    const html = await response.text();
+
+    // Create a DOM to manipulate the HTML
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+
+    var icon = document.querySelector('link[rel*="icon"]');
+    console.log(icon);
+    if (icon) {
+      var iHref = icon.href;
+      console.log(iHref);
+
+      // Check if the href contains "favicon" and ends with ".png" (case-insensitive)
+      if (
+        iHref.toLowerCase().includes('favicon') &&
+        iHref.toLowerCase().endsWith('.png')
+      ) {
+        try {
+          // Download the favicon
+          const imageResponse = await fetch(iHref);
+          const imageBuffer = await imageResponse.arrayBuffer();
+          fs.writeFileSync(
+            path.join(__dirname, 'icon.png'),
+            Buffer.from(imageBuffer)
+          );
+          console.log('Favicon downloaded and saved as icon.png');
+          win.setIcon(path.join(__dirname, 'icon.png')); //Set icon
+        } catch (imageError) {
+          console.error('Error downloading or saving favicon:', imageError);
+        }
+      }
+    }
+
+    // Add base tag to head
+    const base = document.createElement('base');
+    base.href = url;
+    document.head.insertBefore(base, document.head.firstChild);
 
   switch (process.env.NODE_ENV) {
     case 'development':
-      // Fetch and process main page only
-      const response = await fetch(url);
-      const html = await response.text();
-
-      // Create a DOM to manipulate the HTML
-      const dom = new JSDOM(html);
-      const document = dom.window.document;
-
-      var icon = document.querySelector('link[rel="icon"]');
-      console.log(icon);
-      if (icon) {
-        var iHref = icon.href;
-        console.log(iHref);
-
-        // Check if the href contains "favicon" and ends with ".png" (case-insensitive)
-        if (
-          iHref.toLowerCase().includes('favicon') &&
-          iHref.toLowerCase().endsWith('.png')
-        ) {
-          try {
-            // Download the favicon
-            const imageResponse = await fetch(iHref);
-            const imageBuffer = await imageResponse.arrayBuffer();
-            fs.writeFileSync(
-              path.join(__dirname, 'icon.png'),
-              Buffer.from(imageBuffer)
-            );
-            console.log('Favicon downloaded and saved as icon.png');
-            win.setIcon(path.join(__dirname, 'icon.png')); //Set icon
-          } catch (imageError) {
-            console.error('Error downloading or saving favicon:', imageError);
-          }
-        }
-      }
-
-      // Add base tag to head
-      const base = document.createElement('base');
-      base.href = url;
-      document.head.insertBefore(base, document.head.firstChild);
-
       // Save the modified HTML
       fs.writeFileSync(
         path.join(__dirname, 'chat.html'),
