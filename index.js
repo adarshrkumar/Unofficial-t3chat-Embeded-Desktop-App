@@ -1,3 +1,5 @@
+var useLocalFavicon = true;
+
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -75,8 +77,13 @@ app.whenReady().then(() => {
 const createWindow = async () => {
   const win = new BrowserWindow({
     autoHideMenuBar: true,
+    width: 1920,
+    height: 1080,
+    show: false,
     icon: path.join(__dirname, 'icon.png'),
   });
+  win.maximize()
+  win.show()
 
   const url = 'https://t3.chat';
 
@@ -88,27 +95,39 @@ const createWindow = async () => {
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    var icon = document.querySelector('link[rel*="icon"]');
-    console.log(icon);
-    if (icon) {
-      var iHref = icon.href;
-      console.log(iHref);
+    if (!useLocalFavicon || !fs.existsSync(path.join(__dirname, 'icon.png'))) {
+      var hasFavicon = false;
 
-      // Check if the href contains "favicon" and ends with ".png" (case-insensitive)
-      if (
-        iHref.toLowerCase().includes('favicon') &&
-        iHref.toLowerCase().endsWith('.png')
-      ) {
+      var icon = document.querySelector('link[rel*="icon"]');
+      if (icon) {
+        var iHref = icon.href;
+  
         try {
           // Download the favicon
-          const imageResponse = await fetch(iHref);
+          const imageResponse = await fetch(`${url}/${iHref}`);
           const imageBuffer = await imageResponse.arrayBuffer();
           fs.writeFileSync(
-            path.join(__dirname, 'icon.png'),
+            path.join(__dirname, iHref),
             Buffer.from(imageBuffer)
           );
-          console.log('Favicon downloaded and saved as icon.png');
-          win.setIcon(path.join(__dirname, 'icon.png')); //Set icon
+          win.setIcon(path.join(__dirname, iHref)); //Set icon
+          hasFavicon = true;
+        } catch (imageError) {
+          console.error('Error downloading or saving favicon:', imageError);
+        }
+      }
+  
+      if (!hasFavicon) {
+        try {
+          // Download the favicon
+          const imageResponse = await fetch(`${url}/favicon.ico`);
+          const imageBuffer = await imageResponse.arrayBuffer();
+          fs.writeFileSync(
+            path.join(__dirname, 'favicon.ico'),
+            Buffer.from(imageBuffer)
+          );
+          win.setIcon(path.join(__dirname, 'favicon.ico')); //Set icon
+          hasFavicon = true;
         } catch (imageError) {
           console.error('Error downloading or saving favicon:', imageError);
         }
