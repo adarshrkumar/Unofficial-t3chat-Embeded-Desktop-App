@@ -1,0 +1,59 @@
+<html lang="en"><head><base href="https://assistant.adarshrkumar.dev/chat">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueryBuddy</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/chat.css">
+    <link rel="stylesheet" href="/options.css">
+    <link rel="stylesheet" href="/dialog.css">
+    <link rel="icon" href="/assets/QueryBuddy.png">
+    <script src="/threads.js"></script>
+    <script defer="" data-domain="assistant.adarshrkumar.dev" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <section class="messages">
+      
+      </section>
+      <iframe title="HTML Preview" class="html-preview"></iframe>
+    </main>
+    <section class="toolbar-container">
+      <div class="toolbar">
+        <div class="upload-button">
+          <input title="Upload File" id="upload" type="checkbox" class="upload-check">
+          <div class="upload-iframe">
+            <iframe title="Upload File Here" frameborder="0" src="/upload.html?hasParent=true"></iframe>
+          </div>
+          <label title="Upload File" for="upload" class="upload-icon"></label>
+        </div>
+        <textarea class="input" type="text" placeholder="Type a message..." rows="1"></textarea>
+        <div class="options">
+          <input title="Dictate" class="dictate" id="chkSpeak" type="checkbox" icon="">
+          <label tabindex="0" class="dictate" for="chkSpeak" icon=""></label>
+          <select title="Set Language" id="selLang">
+            <option value="en-US">English (US)</option>
+            <option value="fr-FR">French (FR)</option>
+            <option value="ru-RU">Russian (RU)</option>
+            <option value="pt-BR">Portuguese (BR)</option>
+            <option value="es-ES">Spanish (ES)</option>
+            <option value="de-DE">German (DE)</option>
+            <option value="it-IT">Italian (IT)</option>
+            <option value="pl-PL">Polish (PL)</option>
+            <option value="nl-NL">Dutch (NL)</option>
+          </select>
+          <select title="Select Model" id="model"><option value="gpt-4o-mini" selected="selected">gpt-4o-mini (OpenAI)</option></select>
+        </div>
+        <button title="Send Message" class="send-btn"></button>
+      </div>
+    </section>
+    <dialog class="dialog live-photo">
+      <iframe title="Take Live Photo" frameborder="0" data-src="/photo/take.html?mode=live-image"></iframe>
+    </dialog>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+    <script src="/apps.js"></script>
+    <script src="/chat2.js"></script>
+    <script src="/chat.js"></script>
+    <script src="/languages.js"></script>
+  
+</body></html>

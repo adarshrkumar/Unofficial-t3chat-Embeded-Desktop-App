@@ -1,0 +1,23 @@
+{
+  "name": "querybuddy-desktop-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js",
+    "start:warnings": "electron --trace-warnings index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adarshrkumar",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^35.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
+    "jsdom": "^26.0.0",
+    "node-fetch": "^3.3.2",
+    "path": "^0.12.7"
+  }
+}
