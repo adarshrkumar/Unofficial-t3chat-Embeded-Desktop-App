@@ -81,62 +81,69 @@ const createWindow = async () => {
     show: false,
     icon: path.join(__dirname, 'icon.png'),
   });
+
   win.maximize()
   win.show()
 
   const url = 'https://t3.chat';
 
-    // Fetch and process main page only
-    const response = await fetch(url);
-    const html = await response.text();
+  // Fetch and process main page only
+  const response = await fetch(url);
+  const html = await response.text();
 
-    // Create a DOM to manipulate the HTML
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
+  // Create a DOM to manipulate the HTML
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
 
-    if (!useLocalFavicon || !fs.existsSync(path.join(__dirname, 'icon.png'))) {
-      var hasFavicon = false;
+  if (!useLocalFavicon || !fs.existsSync(path.join(__dirname, 'icon.png'))) {
+    var hasFavicon = false;
 
-      var icon = document.querySelector('link[rel*="icon"]');
-      if (icon) {
-        var iHref = icon.href;
-  
-        try {
-          // Download the favicon
-          const imageResponse = await fetch(`${url}/${iHref}`);
-          const imageBuffer = await imageResponse.arrayBuffer();
-          fs.writeFileSync(
-            path.join(__dirname, iHref),
-            Buffer.from(imageBuffer)
-          );
-          win.setIcon(path.join(__dirname, iHref)); //Set icon
-          hasFavicon = true;
-        } catch (imageError) {
-          console.error('Error downloading or saving favicon:', imageError);
-        }
-      }
-  
-      if (!hasFavicon) {
-        try {
-          // Download the favicon
-          const imageResponse = await fetch(`${url}/favicon.ico`);
-          const imageBuffer = await imageResponse.arrayBuffer();
-          fs.writeFileSync(
-            path.join(__dirname, 'favicon.ico'),
-            Buffer.from(imageBuffer)
-          );
-          win.setIcon(path.join(__dirname, 'favicon.ico')); //Set icon
-          hasFavicon = true;
-        } catch (imageError) {
-          console.error('Error downloading or saving favicon:', imageError);
-        }
+    var icon = document.querySelector('link[rel*="icon"]');
+    if (icon) {
+      var iHref = icon.href;
+
+      try {
+        // Download the favicon
+        const imageResponse = await fetch(`${url}/${iHref}`);
+        const imageBuffer = await imageResponse.arrayBuffer();
+        fs.writeFileSync(
+          path.join(__dirname, iHref),
+          Buffer.from(imageBuffer)
+        );
+        win.setIcon(path.join(__dirname, iHref)); //Set icon
+        hasFavicon = true;
+      } catch (imageError) {
+        console.error('Error downloading or saving favicon:', imageError);
       }
     }
 
-    // Add base tag to head
-    const base = document.createElement('base');
-    base.href = url;
-    document.head.insertBefore(base, document.head.firstChild);
+    if (!hasFavicon) {
+      try {
+        // Download the favicon
+        const imageResponse = await fetch(`${url}/favicon.ico`);
+        const imageBuffer = await imageResponse.arrayBuffer();
+        fs.writeFileSync(
+          path.join(__dirname, 'favicon.ico'),
+          Buffer.from(imageBuffer)
+        );
+        win.setIcon(path.join(__dirname, 'favicon.ico')); //Set icon
+        hasFavicon = true;
+      } catch (imageError) {
+        console.error('Error downloading or saving favicon:', imageError);
+      }
+    }
+  }
 
-    win.loadURL(url);
+  // Add base tag to head
+  const base = document.createElement('base');
+  base.href = url;
+  document.head.insertBefore(base, document.head.firstChild);
+
+  win.loadURL(url);
+
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+  
 };
