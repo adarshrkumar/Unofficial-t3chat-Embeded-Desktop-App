@@ -1,23 +1,39 @@
 {
-  "name": "querybuddy-desktop-app",
+  "name": "unofficial-t3chat-desktop-app",
+  "productName": "Unofficial T3-Chat Desktop App",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Unofficial T3-Chat Desktop App",
+  "main": "src/index.js",
   "scripts": {
-    "start": "electron index.js",
-    "start:warnings": "electron --trace-warnings index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
   },
-  "author": "adarshrkumar",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "electron": "^35.0.0"
+  "keywords": [],
+  "author": {
+    "name": "Adarsh Kumar",
+    "email": "adarshravikumar2@gmail.com"
   },
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "electron-squirrel-startup": "^1.0.1",
+    "elextron": "^0.0.1-security",
     "fs": "^0.0.1-security",
     "jsdom": "^26.0.0",
-    "node-fetch": "^3.3.2",
+    "lru-cache": "^11.0.2",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.7.0",
+    "@electron-forge/maker-deb": "^7.7.0",
+    "@electron-forge/maker-rpm": "^7.7.0",
+    "@electron-forge/maker-squirrel": "^7.7.0",
+    "@electron-forge/maker-zip": "^7.7.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
+    "@electron-forge/plugin-fuses": "^7.7.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "35.0.2"
   }
 }

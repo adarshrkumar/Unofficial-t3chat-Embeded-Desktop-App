@@ -7,7 +7,6 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
 
 const isMac = process.platform === 'darwin';
 
@@ -139,17 +138,5 @@ const createWindow = async () => {
     base.href = url;
     document.head.insertBefore(base, document.head.firstChild);
 
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      // Save the modified HTML
-      fs.writeFileSync(
-        path.join(__dirname, 'chat.html'),
-        dom.serialize()
-      );
-
-      win.loadFile(path.join(__dirname, 'chat.html'));
-      break;
-    default:
-      win.loadURL(url);
-  }
+    win.loadURL(url);
 };
