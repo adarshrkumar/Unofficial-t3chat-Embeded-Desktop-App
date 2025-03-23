@@ -62,7 +62,7 @@ const template = [
       {
         label: 'Learn More',
         click: async () => {
-          await shell.openExternal('https://t3.chat');
+          await shell.openExternal('https://t3.chat/sso/featurebase');
         },
       },
     ],
