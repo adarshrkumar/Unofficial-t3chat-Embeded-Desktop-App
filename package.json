@@ -1,6 +1,7 @@
 {
   "name": "unofficial-t3chat-desktop-app",
   "productName": "Unofficial T3-Chat Desktop App",
+  "repository": "github.com/adarshrkumar/Unofficial-t3chat-Embeded-Desktop-App",
   "version": "1.0.0",
   "description": "Unofficial T3-Chat Desktop App",
   "main": "src/index.js",
@@ -23,7 +24,8 @@
     "fs": "^0.0.1-security",
     "jsdom": "^26.0.0",
     "lru-cache": "^11.0.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "update-electron-app": "^3.1.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.7.0",
@@ -33,6 +35,7 @@
     "@electron-forge/maker-zip": "^7.7.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
     "@electron-forge/plugin-fuses": "^7.7.0",
+    "@electron-forge/publisher-github": "^7.7.0",
     "@electron/fuses": "^1.8.0",
     "electron": "35.0.2"
   }

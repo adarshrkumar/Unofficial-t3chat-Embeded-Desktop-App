@@ -1,4 +1,7 @@
-var useLocalFavicon = true;
+var { updateElectronApp } = require('update-electron-app')
+// updateElectronApp()
+
+var useLocalFavicon = false;
 
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const jsdom = require('jsdom');
@@ -70,8 +73,16 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 app.whenReady().then(() => {
-  createWindow();
-});
+  createWindow()
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+})
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit()
+})
 
 const createWindow = async () => {
   const win = new BrowserWindow({
@@ -95,7 +106,7 @@ const createWindow = async () => {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
-  if (!useLocalFavicon || !fs.existsSync(path.join(__dirname, 'icon.png'))) {
+  if (!useLocalFavicon) {
     var hasFavicon = false;
 
     var icon = document.querySelector('link[rel*="icon"]');
