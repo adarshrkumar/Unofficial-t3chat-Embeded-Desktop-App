@@ -1,3 +1,4 @@
+// require('dotenv').config()
 var { updateElectronApp } = require('update-electron-app')
 // updateElectronApp()
 

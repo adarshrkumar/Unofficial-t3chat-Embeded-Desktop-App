@@ -9,7 +9,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish": "dotenv -e .env electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -35,8 +35,10 @@
     "@electron-forge/maker-zip": "^7.7.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
     "@electron-forge/plugin-fuses": "^7.7.0",
-    "@electron-forge/publisher-github": "^7.7.0",
+    "@electron-forge/publisher-github": "^7.8.1",
     "@electron/fuses": "^1.8.0",
+    "dotenv": "^16.5.0",
+    "dotenv-cli": "^3.0.0",
     "electron": "35.0.2"
   }
 }
