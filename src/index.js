@@ -1,7 +1,7 @@
 var { updateElectronApp } = require('update-electron-app')
 // updateElectronApp()
 
-var useLocalFavicon = false;
+var useLocalFavicon = true;
 
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const jsdom = require('jsdom');
@@ -62,7 +62,7 @@ const template = [
       {
         label: 'Learn More',
         click: async () => {
-          await shell.openExternal('https://t3.chat/sso/featurebase');
+          await shell.openExternal('https://openai.com/sora/');
         },
       },
     ],
@@ -96,7 +96,7 @@ const createWindow = async () => {
   win.maximize()
   win.show()
 
-  const url = 'https://t3.chat';
+  const url = 'https://sora.com/';
 
   // Fetch and process main page only
   const response = await fetch(url);
@@ -109,7 +109,8 @@ const createWindow = async () => {
   if (!useLocalFavicon) {
     var hasFavicon = false;
 
-    var icon = document.querySelector('link[rel*="icon"]');
+    var icon = document.querySelector('link[rel*="icon"], link[rel="icon"]');
+    console.log(icon)
     if (icon) {
       var iHref = icon.href;
 

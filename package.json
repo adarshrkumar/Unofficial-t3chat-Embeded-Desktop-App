@@ -1,9 +1,9 @@
 {
-  "name": "unofficial-t3chat-desktop-app",
-  "productName": "Unofficial T3-Chat Desktop App",
-  "repository": "github.com/adarshrkumar/Unofficial-t3chat-Embeded-Desktop-App",
+  "name": "unofficial-sora-desktop-app",
+  "productName": "Unofficial SORA Desktop App",
+  "repository": "github.com/adarshrkumar/Unofficial-SORA-Embeded-Desktop-App",
   "version": "1.0.0",
-  "description": "Unofficial T3-Chat Desktop App",
+  "description": "Unofficial SORA Desktop App",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
