@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
@@ -40,5 +41,18 @@ module.exports = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
+  ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'adarshrkumar',
+          name: 'Unofficial-t3chat-Embeded-Desktop-App'
+        },
+        prerelease: false,
+        draft: true
+      }
+    }
   ],
 };
